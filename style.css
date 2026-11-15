@@ -3,16 +3,16 @@
   Author: Zulhazri Aiman bin Abdu Raji
   File: style.css (shared by all six pages)
 
-  Design idea: a dark "night drive" look that ties together my three
-  interests (cars, gaming and music). Dark dashboard colours, one light blue
-  accent like a glowing dashboard light, and a fixed navigation bar on the left
-  side like a car's instrument panel.
+  Design idea: styled like a performance car launch page. A dark body,
+  one racing-red accent, big bold italic headings like a model badge,
+  a slim navigation bar across the top and a full-width "reveal" banner on
+  the home page.
 
   Contents:
     1. Colour and font variables
     2. Base and reset
     3. Accessibility helpers
-    4. Left sidebar and navigation
+    4. Top navigation bar
     5. Main content area and page headings
     6. Shared cards and tags
     7. Home page
@@ -20,27 +20,30 @@
     9. Interests page
    10. Gallery
    11. Resume page
-   12. Contact page and footer
+   12. Contact page
    13. Responsive layout (tablet and phone)
+   14. Quick questions, map and resume download
+   15. Print layout (used for the resume PDF)
 */
 
 
 /* ===== 1. COLOUR AND FONT VARIABLES ===== */
 :root {
-  --bg: #0e1014;          /* page background, near black */
-  --panel: #161a21;       /* sidebar and cards */
-  --panel-2: #1d222b;     /* card hover, inner boxes */
-  --line: #2a303b;        /* borders */
-  --text: #e9ecf1;        /* main text */
-  --muted: #9aa3b2;       /* secondary text */
-  --accent: #38bdf8;      /* light blue accent, like a glowing dashboard light */
-  --accent-soft: rgba(56, 189, 248, 0.12);
+  --bg: #0b0b0d;          /* page background, near black */
+  --panel: #151518;       /* cards */
+  --panel-2: #1c1c20;     /* card hover, inner boxes */
+  --line: #2b2b31;        /* borders */
+  --text: #f2f2f4;        /* main text */
+  --muted: #a3a3ad;       /* secondary text */
+  --accent: #ff2d3d;      /* racing red for text, lines and icons */
+  --accent-fill: #d50021; /* deeper red for buttons with white text (better contrast) */
+  --accent-soft: rgba(255, 45, 61, 0.12);
 
-  --font-head: "Chakra Petch", "Arial Narrow", Arial, sans-serif;
+  --font-head: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
   --font-body: "Inter", "Segoe UI", Arial, sans-serif;
 
-  --sidebar-width: 270px;
-  --radius: 10px;
+  --header-height: 64px;
+  --radius: 4px;          /* sharp corners for a technical look */
 }
 
 
@@ -53,6 +56,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;  /* stops the full-width home banner from causing sideways scroll */
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -60,11 +64,40 @@ body {
   line-height: 1.7;
 }
 
+/*
+  Page background: a mix of three faint layers that sits still while the page scrolls.
+  1. Carbon fibre weave (two tiny diagonal checks)
+  2. A faint blueprint grid
+  3. A few thin red speed lines
+  plus a soft red glow in two corners. All drawn with CSS gradients, no image files.
+*/
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 100% 0%, rgba(213, 0, 33, 0.2), rgba(0, 0, 0, 0) 45%),
+    radial-gradient(ellipse at 0% 100%, rgba(213, 0, 33, 0.12), rgba(0, 0, 0, 0) 45%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 160px, rgba(255, 45, 61, 0.07) 160px, rgba(255, 45, 61, 0.07) 162px),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, rgba(0, 0, 0, 0) 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, rgba(0, 0, 0, 0) 1px),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, 0.03) 75%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, 0.03) 75%);
+  background-size: auto, auto, auto, 80px 80px, 80px 80px, 8px 8px, 8px 8px;
+}
+
 h1,
 h2,
 h3 {
   font-family: var(--font-head);
-  line-height: 1.2;
+  font-weight: 700;
+  line-height: 1.1;
   margin: 0 0 0.6rem;
 }
 
@@ -82,6 +115,36 @@ img {
 }
 
 
+/* Page load: each block in the main area fades in and rises slightly, one after another */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.main > * {
+  animation: rise 0.6s ease both;
+}
+
+.main > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.main > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.main > *:nth-child(n+4) {
+  animation-delay: 0.24s;
+}
+
+
 /* ===== 3. ACCESSIBILITY HELPERS ===== */
 /* Skip link stays hidden until a keyboard user tabs onto it */
 .skip-link {
@@ -89,8 +152,8 @@ img {
   left: 1rem;
   top: -4rem;
   z-index: 100;
-  background: var(--accent);
-  color: #111;
+  background: var(--accent-fill);
+  color: #fff;
   padding: 0.5rem 1rem;
   border-radius: var(--radius);
   font-weight: 600;
@@ -115,49 +178,113 @@ a:focus-visible {
 }
 
 
-/* ===== 4. LEFT SIDEBAR AND NAVIGATION ===== */
+/* ===== 4. TOP NAVIGATION BAR ===== */
 /*
-  The sidebar is hidden off the left edge at first. Clicking the Menu button
-  ticks a hidden checkbox (#nav-toggle), and the CSS below slides the sidebar in.
-  This works with HTML and CSS only, no JavaScript.
+  A slim bar fixed to the top of the screen: my name as a wordmark on the left
+  and the page links on the right. On phones the links fold into a Menu button.
+  The button ticks a hidden checkbox (#nav-toggle) and CSS shows the links,
+  so it works with HTML and CSS only, no JavaScript.
 */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  background-color: rgba(11, 11, 13, 0.92);
+  border-bottom: 1px solid var(--line);
+}
 
-/* The real checkbox is hidden from view but can still be reached with the keyboard */
+/* My name styled like a model badge: bold italic, second word in red */
+.wordmark {
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.wordmark span {
+  color: var(--accent);
+  margin-left: 0.35rem;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  position: relative;
+  display: block;
+  padding: 0.4rem 0;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* A red line slides in under the link on hover and stays under the current page */
+.nav-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current="page"] {
+  color: var(--text);
+}
+
+.nav-list a:hover::after,
+.nav-list a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* The checkbox and Menu button are only needed on phones */
 .nav-toggle {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
+  margin: 0;
 }
 
-/* Menu button, fixed in the top-left corner */
 .menu-btn {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 70;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.55rem 0.9rem;
-  background-color: var(--panel);
+  padding: 0.5rem 0.9rem;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  color: var(--text);
+  border-radius: var(--radius);
   font-family: var(--font-head);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color 0.2s ease;
 }
 
-.menu-btn:hover {
-  border-color: var(--accent);
-}
-
-/* Show a focus outline on the button when the checkbox has keyboard focus */
-.nav-toggle:focus-visible + .menu-btn {
+.nav-toggle:focus-visible ~ .site-header .menu-btn {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
@@ -169,9 +296,8 @@ a:focus-visible {
   display: block;
   width: 18px;
   height: 2px;
-  background-color: var(--accent);
-  border-radius: 2px;
-  transition: transform 0.25s ease, background-color 0.25s ease;
+  background-color: var(--text);
+  transition: transform 0.2s ease;
 }
 
 .menu-icon {
@@ -193,196 +319,8 @@ a:focus-visible {
   top: 6px;
 }
 
-/* The word on the button changes between Menu and Close */
 .menu-close {
   display: none;
-}
-
-/* Dark layer behind the open sidebar; clicking it closes the menu */
-.nav-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
-  background-color: rgba(0, 0, 0, 0.55);
-  cursor: pointer;
-}
-
-/* The sidebar itself, starting off screen */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 60;
-  width: var(--sidebar-width);
-  max-width: 85%;
-  height: 100vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 5rem 1.5rem 2rem;
-  transform: translateX(-100%);
-  visibility: hidden;  /* hidden links cannot be reached with the Tab key */
-  transition: transform 0.3s ease, visibility 0.3s ease;
-  background-color: var(--panel);
-  border-right: 1px solid var(--line);
-}
-
-.sidebar-photo {
-  width: 96px;
-  height: 96px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--accent);
-  margin-bottom: 1rem;
-}
-
-.sidebar-name {
-  font-family: var(--font-head);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-}
-
-.sidebar-role {
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin: 0.35rem 0 2rem;
-}
-
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Each link shows a small number, like a gear position */
-.nav-list a {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.65rem 0.85rem;
-  margin-bottom: 0.25rem;
-  border-left: 3px solid transparent;
-  border-radius: 0 8px 8px 0;
-  color: var(--muted);
-  text-decoration: none;
-  font-family: var(--font-head);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-num {
-  font-size: 0.75rem;
-  color: var(--accent);
-  min-width: 1.4rem;
-}
-
-.nav-list a:hover {
-  color: var(--text);
-  background-color: var(--panel-2);
-}
-
-/* The page that is currently open (set with aria-current="page" in the HTML) */
-.nav-list a[aria-current="page"] {
-  color: var(--text);
-  background-color: var(--accent-soft);
-  border-left-color: var(--accent);
-}
-
-/* Location note pushed to the bottom of the sidebar */
-.sidebar-foot {
-  margin-top: auto;
-  padding-top: 2rem;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-
-/* ----- When the menu is open (checkbox ticked) ----- */
-.nav-toggle:checked ~ .sidebar {
-  transform: translateX(0);
-  visibility: visible;
-  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.nav-toggle:checked ~ .nav-overlay {
-  display: block;
-}
-
-.nav-toggle:checked + .menu-btn .menu-open {
-  display: none;
-}
-
-.nav-toggle:checked + .menu-btn .menu-close {
-  display: inline;
-}
-
-/* Hamburger turns into an X */
-.nav-toggle:checked + .menu-btn .menu-icon {
-  background-color: transparent;
-}
-
-.nav-toggle:checked + .menu-btn .menu-icon::before {
-  transform: translateY(6px) rotate(45deg);
-}
-
-.nav-toggle:checked + .menu-btn .menu-icon::after {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
-
-/* ----- Slide out on hover (mouse users only) ----- */
-/* A thin glowing strip on the left edge. Moving the mouse onto it, or onto the
-   sidebar itself, slides the sidebar out. Moving away slides it back in. */
-.edge-trigger {
-  display: none;
-}
-
-@media (hover: hover) {
-  .edge-trigger {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 55;
-    width: 14px;
-    height: 100vh;
-    border-left: 3px solid var(--accent);
-    opacity: 0.6;
-  }
-
-  .edge-trigger:hover ~ .sidebar,
-  .sidebar:hover {
-    transform: translateX(0);
-    visibility: visible;
-    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5);
-  }
-
-  /* On mouse devices the Menu button is hidden, so the edge slide is the only way in.
-     It still appears for keyboard users (when the checkbox has focus) so they can open the menu. */
-  .menu-btn {
-    display: none;
-  }
-
-  .nav-toggle:focus-visible + .menu-btn,
-  .nav-toggle:checked + .menu-btn {
-    display: flex;
-  }
-
-  /* No button at the top, so less space is needed above the content */
-  .main {
-    padding-top: 3.5rem;
-  }
 }
 
 
@@ -390,11 +328,11 @@ a:focus-visible {
 /* Centred on the page, with space at the top for the Menu button */
 .main {
   margin: 0 auto;
-  padding: 5rem 4rem 2rem;
-  max-width: 1100px;
+  padding: 7rem 4rem 5rem;  /* 7rem = 64px bar + 3rem space; 5rem space at the bottom */
+  max-width: 1200px;
 }
 
-/* Small light blue label above each page title */
+/* Small red label above each page title */
 .eyebrow {
   font-family: var(--font-head);
   font-size: 0.85rem;
@@ -406,8 +344,21 @@ a:focus-visible {
 }
 
 .page-title {
-  font-size: 2.6rem;
+  font-size: 3.6rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
   margin-bottom: 1rem;
+}
+
+/* Short red bar under each page title */
+.page-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 0.8rem;
+  background-color: var(--accent);
 }
 
 .lead {
@@ -418,8 +369,11 @@ a:focus-visible {
 }
 
 .section-title {
-  font-size: 1.5rem;
-  margin-top: 2.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  margin-top: 4.5rem;
 }
 
 
@@ -438,7 +392,9 @@ a:focus-visible {
 }
 
 .card h3 {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
 .card p:last-child {
@@ -482,13 +438,14 @@ a:focus-visible {
 .btn {
   display: inline-block;
   padding: 0.7rem 1.4rem;
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  background-color: var(--accent);
-  color: #111;
+  border: 2px solid var(--accent-fill);
+  border-radius: var(--radius);
+  background-color: var(--accent-fill);
+  color: #fff;
   font-family: var(--font-head);
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -496,7 +453,7 @@ a:focus-visible {
 
 .btn:hover {
   background-color: transparent;
-  color: var(--accent);
+  color: var(--text);
 }
 
 .btn-ghost {
@@ -512,81 +469,257 @@ a:focus-visible {
 
 
 /* ===== 7. HOME PAGE ===== */
+/*
+  The hero is a full-width launch banner, like a new car reveal.
+  It breaks out of the centred .main column to fill the whole screen width.
+  A huge faint "ZA" sits in the background, and a red diagonal stripe runs behind the photo.
+*/
 .hero {
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 3rem;
-  margin-bottom: 3rem;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: -3rem;
+  min-height: 88vh;
+  padding: 3rem 8vw;
+  overflow: hidden;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(115deg, rgba(0, 0, 0, 0) 58%, #d50021 58%, #d50021 61%, rgba(0, 0, 0, 0) 61%),
+    radial-gradient(circle at 75% 40%, #23232a 0%, #0b0b0d 60%);
+  border-bottom: 1px solid var(--line);
 }
 
-.hero-photo {
-  width: 240px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  flex-shrink: 0;
+/* Giant outlined initials in the background */
+.hero::before {
+  content: "ZA";
+  position: absolute;
+  left: -2vw;
+  bottom: -8vw;
+  font-family: var(--font-head);
+  font-size: 34vw;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.hero-text {
+  position: relative;
+  max-width: 620px;
 }
 
 .hero h1 {
-  font-size: 3.2rem;
-  line-height: 1.05;
+  font-size: 6.5rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 0.92;
   text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
-/* The second line of the name in light blue */
+/* The second line of the name in red */
 .hero h1 span {
+  display: block;
   color: var(--accent);
+}
+
+.hero-tagline {
+  font-family: var(--font-head);
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.hero .lead {
+  margin-bottom: 0;
+}
+
+.hero-photo {
+  position: relative;
+  width: 360px;
+  height: 450px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
-/* Four quick facts in a row, like gauges on a dashboard */
-.facts {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+/* "Right now": three small cards, each with a thumbnail and a label */
+.now-grid {
   list-style: none;
-  margin: 0 0 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0;
   padding: 0;
 }
 
-.facts li {
+.now-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem;
   background-color: var(--panel);
   border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
-  padding: 1.1rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.fact-label {
+.now-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.now-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.now-label,
+.now-title,
+.now-sub {
   display: block;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+}
+
+.now-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.3rem;
 }
 
-.fact-value {
+.now-title {
   font-family: var(--font-head);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1.1;
 }
 
-.three-col {
+.now-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Gallery preview: section title on the left, button on the right, photo slider below */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.section-head .section-title {
+  margin-bottom: 0;
+}
+
+.section-head .btn {
+  white-space: nowrap;  /* keeps "View gallery" on one line */
+}
+
+/* On the home page the slider spans the full width under the heading, with a shorter frame */
+.section-head + .photo-slider {
+  max-width: none;
+}
+
+.section-head + .photo-slider .slides {
+  padding-bottom: 48%;
+}
+
+/* "Take a look around": three tall photo tiles with the title over the photo */
+.tile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.card-link {
-  font-weight: 600;
+.tile {
+  position: relative;
+  display: block;
+  height: 340px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: #fff;
   text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.tile:hover {
+  border-color: var(--accent);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tile:hover img {
+  transform: scale(1.06);
+}
+
+.tile-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4rem 1.25rem 1.25rem;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+}
+
+.tile-title {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tile-sub {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: #d0d0d6;
+}
+
+/* A red arrow slides in next to the title on hover */
+.tile-title::after {
+  content: " \2192";
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tile:hover .tile-title::after {
+  opacity: 1;
 }
 
 
@@ -625,7 +758,10 @@ a:focus-visible {
 }
 
 .timeline h2 {
-  font-size: 1.35rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
   margin-top: 0.2rem;
 }
 
@@ -634,26 +770,76 @@ a:focus-visible {
   max-width: 680px;
 }
 
+/* Chapters with a photo: text on the left, photo on the right */
+.timeline .has-photo {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* The photo with its description laid over the bottom, on a dark fade so it stays readable */
+.timeline-figure {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.timeline-photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.timeline-figure figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.75rem 0.8rem 0.6rem;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 
 /* ===== 9. INTERESTS PAGE ===== */
-/* Each interest is a wide panel: big number on the left, text on the right */
+/* Each interest is an open full-width section (no box): big red number on the left,
+   content on the right, and a thin line between sections */
 .interest {
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 3.5rem 0;
+  background-color: transparent;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.interest:hover {
+  transform: none;
+  border-color: var(--line);
 }
 
 .interest-num {
   font-family: var(--font-head);
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: 4rem;
+  font-weight: 800;
+  font-style: italic;
   line-height: 1;
   color: var(--accent);
 }
 
 .interest h2 {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
 .interest-list {
@@ -692,11 +878,11 @@ a:focus-visible {
   padding: 0;
 }
 
-/* Car and bike picks: photos only, two per row (2 x 2) */
+/* Car and bike picks: three photos in one row */
 .car-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin: 0;
   padding: 0;
@@ -722,7 +908,7 @@ a:focus-visible {
 .car-card img {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 180px;
   object-fit: cover;
   transition: transform 0.4s ease;
 }
@@ -1054,7 +1240,7 @@ a:focus-visible {
 }
 
 
-/* ----- Places slider (arrows and dots, CSS only) ----- */
+/* ----- Photo sliders (arrows and dots, CSS only): used for places, home snapshots and the gallery ----- */
 /* Text that only screen readers hear (used inside the arrow and dot labels) */
 .sr-only {
   position: absolute;
@@ -1100,12 +1286,16 @@ a:focus-visible {
 }
 
 /* Show the slide that matches the ticked radio button */
-#place-1:checked ~ .slides .slide:nth-child(1),
-#place-2:checked ~ .slides .slide:nth-child(2),
-#place-3:checked ~ .slides .slide:nth-child(3),
-#place-4:checked ~ .slides .slide:nth-child(4),
-#place-5:checked ~ .slides .slide:nth-child(5),
-#place-6:checked ~ .slides .slide:nth-child(6) {
+/* Works for any slider on the site with up to nine slides: the 1st radio shows the 1st slide, and so on */
+.slide-radio:nth-of-type(1):checked ~ .slides .slide:nth-child(1),
+.slide-radio:nth-of-type(2):checked ~ .slides .slide:nth-child(2),
+.slide-radio:nth-of-type(3):checked ~ .slides .slide:nth-child(3),
+.slide-radio:nth-of-type(4):checked ~ .slides .slide:nth-child(4),
+.slide-radio:nth-of-type(5):checked ~ .slides .slide:nth-child(5),
+.slide-radio:nth-of-type(6):checked ~ .slides .slide:nth-child(6),
+.slide-radio:nth-of-type(7):checked ~ .slides .slide:nth-child(7),
+.slide-radio:nth-of-type(8):checked ~ .slides .slide:nth-child(8),
+.slide-radio:nth-of-type(9):checked ~ .slides .slide:nth-child(9) {
   opacity: 1;
   visibility: visible;
 }
@@ -1118,10 +1308,32 @@ a:focus-visible {
   text-decoration: none;
 }
 
+.slide figure {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
 .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Photos of people: show the whole photo instead of cropping it, on a dark background.
+   Kept narrower than the page so the photo fits on a laptop screen without scrolling */
+.photo-slider {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.photo-slider .slides {
+  padding-bottom: 62%;
+  background-color: #050506;
+}
+
+.photo-slider .slide img {
+  object-fit: contain;
 }
 
 /* Caption over the bottom of the photo, on a dark fade so the text is readable */
@@ -1147,12 +1359,6 @@ a:focus-visible {
   font-family: var(--font-head);
   font-size: 1.6rem;
   font-weight: 700;
-}
-
-.slide-note {
-  display: block;
-  font-size: 0.95rem;
-  color: #d5dae3;
 }
 
 /* Round arrow buttons on the left and right of the photo */
@@ -1225,12 +1431,15 @@ a:focus-visible {
   background-color: var(--muted);
 }
 
-#place-1:checked ~ .dots label:nth-child(1),
-#place-2:checked ~ .dots label:nth-child(2),
-#place-3:checked ~ .dots label:nth-child(3),
-#place-4:checked ~ .dots label:nth-child(4),
-#place-5:checked ~ .dots label:nth-child(5),
-#place-6:checked ~ .dots label:nth-child(6) {
+.slide-radio:nth-of-type(1):checked ~ .dots label:nth-child(1),
+.slide-radio:nth-of-type(2):checked ~ .dots label:nth-child(2),
+.slide-radio:nth-of-type(3):checked ~ .dots label:nth-child(3),
+.slide-radio:nth-of-type(4):checked ~ .dots label:nth-child(4),
+.slide-radio:nth-of-type(5):checked ~ .dots label:nth-child(5),
+.slide-radio:nth-of-type(6):checked ~ .dots label:nth-child(6),
+.slide-radio:nth-of-type(7):checked ~ .dots label:nth-child(7),
+.slide-radio:nth-of-type(8):checked ~ .dots label:nth-child(8),
+.slide-radio:nth-of-type(9):checked ~ .dots label:nth-child(9) {
   width: 26px;
   border-radius: 5px;
   background-color: var(--accent);
@@ -1245,40 +1454,19 @@ a:focus-visible {
 
 
 /* ===== 10. GALLERY ===== */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-/* No border or box: just the photo */
-.gallery-item {
-  margin: 0;
-}
-
-/* Every photo cropped to the same height so the grid stays even */
-.gallery-item img {
-  display: block;
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: var(--radius);
-}
-
-.gallery-item figcaption {
-  padding: 0.6rem 0 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
+/* The gallery uses the photo slider from section 9 (.photo-slider) */
 
 
 /* ===== 11. RESUME PAGE ===== */
 .resume-block {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .resume-block > h2 {
-  font-size: 1.4rem;
+  font-size: 2rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--line);
   margin-bottom: 1.25rem;
@@ -1298,7 +1486,9 @@ a:focus-visible {
 }
 
 .entry-head h3 {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
+  font-style: italic;
+  text-transform: uppercase;
   margin: 0;
 }
 
@@ -1336,69 +1526,131 @@ a:focus-visible {
 }
 
 
-/* ===== 12. CONTACT PAGE AND FOOTER ===== */
+/* ===== 12. CONTACT PAGE ===== */
 /* Browsers italicise <address> by default, so reset it */
-.contact-list {
+.contact-block {
   font-style: normal;
-  display: grid;
-  gap: 1rem;
-  max-width: 560px;
 }
 
-.contact-list a {
+.contact-label {
+  margin: 0 0 0.3rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The email is the main link, shown huge like a headline */
+.contact-email {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-size: 3.4rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 4px solid var(--accent);
+  overflow-wrap: anywhere;  /* lets the long address wrap on small screens */
+  transition: color 0.2s ease;
+}
+
+.contact-email:hover {
+  color: var(--accent);
+}
+
+.contact-socials {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.1rem 1.4rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 3rem 0 0;
+  padding: 0;
+}
+
+.contact-socials a {
+  display: block;
+  min-width: 240px;
+  padding: 1rem 1.25rem;
   background-color: var(--panel);
   border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
   color: var(--text);
   text-decoration: none;
   transition: border-color 0.2s ease;
 }
 
-.contact-list a:hover {
+.contact-socials a:hover {
   border-color: var(--accent);
 }
 
-.contact-type {
-  font-family: var(--font-head);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+/* Location and availability, shown as two small labelled lines */
+.contact-facts {
+  list-style: none;
+  margin: -1rem 0 3rem;
+  padding: 0;
+}
+
+.contact-facts li {
+  margin-bottom: 0.4rem;
+}
+
+.contact-fact-label {
+  display: inline-block;
+  min-width: 110px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.site-footer {
-  margin-top: 4rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.85rem;
+.contact-type {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
-.site-footer p {
-  margin: 0.2rem 0;
-}
-
-.site-footer a {
+.contact-handle {
+  display: block;
+  font-size: 0.9rem;
   color: var(--muted);
 }
+
 
 
 /* ===== 13. RESPONSIVE LAYOUT ===== */
 /* Tablet: fewer columns */
 @media (max-width: 1100px) {
   .main {
-    padding: 3rem 2.5rem 2rem;
+    padding: 6.5rem 2.5rem 4rem;
   }
 
-  .facts {
-    grid-template-columns: repeat(2, 1fr);
+  .site-header {
+    padding: 0 1.5rem;
   }
 
-  .three-col {
+  .nav-list {
+    gap: 1.25rem;
+  }
+
+  .hero {
+    padding: 3rem 2.5rem;
+  }
+
+  .hero h1 {
+    font-size: 5rem;
+  }
+
+  .hero-photo {
+    width: 280px;
+    height: 350px;
+  }
+
+  .now-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1416,31 +1668,161 @@ a:focus-visible {
   }
 }
 
-/* Phone: smaller padding; the menu works the same as on a laptop */
+/* Phone: the nav links fold into the Menu button, and the banner stacks */
 @media (max-width: 860px) {
   .main {
-    padding: 5rem 1rem 2rem;
+    padding: 6rem 1rem 3rem;
+  }
+
+  .site-header {
+    padding: 0 1rem;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+
+  /* The links drop down under the bar when the menu is open */
+  .site-header nav {
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--line);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .nav-list a {
+    padding: 0.8rem 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-list a::after {
+    display: none;
+  }
+
+  .nav-list a[aria-current="page"] {
+    color: var(--accent);
+  }
+
+  .nav-toggle:checked ~ .site-header nav {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav-toggle:checked ~ .site-header .menu-open {
+    display: none;
+  }
+
+  .nav-toggle:checked ~ .site-header .menu-close {
+    display: inline;
+  }
+
+  /* Hamburger turns into an X when open */
+  .nav-toggle:checked ~ .site-header .menu-icon {
+    background-color: transparent;
+  }
+
+  .nav-toggle:checked ~ .site-header .menu-icon::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .nav-toggle:checked ~ .site-header .menu-icon::after {
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   .hero {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 2rem;
+    min-height: 0;
+    margin-top: -2rem;
+    padding: 2rem 1rem 2.5rem;
+  }
+
+  /* No red stripe on phones, so it never runs through the text */
+  .hero {
+    background-image: radial-gradient(circle at 50% 20%, #23232a 0%, #0b0b0d 60%);
+  }
+
+  .hero::before {
+    font-size: 60vw;
   }
 
   .hero-photo {
     width: 100%;
-    max-width: 320px;
-    height: 340px;
+    max-width: 340px;
+    height: 380px;
   }
 
-  .hero h1,
+  .hero h1 {
+    font-size: 3.6rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.4rem;
+  }
+
   .page-title {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
   }
 
-  .two-col,
-  .facts {
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tile {
+    height: 220px;
+  }
+
+  .contact-email {
+    font-size: 1.8rem;
+  }
+
+  .contact-fact-label {
+    display: block;
+  }
+
+  .contact-socials a {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .contact-socials li {
+    width: 100%;
+  }
+
+  .interest {
+    padding: 2.5rem 0;
+  }
+
+  .timeline .has-photo {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .faq summary {
+    font-size: 1.1rem;
+  }
+
+  .section-head .btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .two-col {
     grid-template-columns: 1fr;
   }
 
@@ -1454,24 +1836,13 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  /* Picks stack one per row on phones */
+  .car-grid {
+    grid-template-columns: 1fr;
+  }
+
   .car-card img {
-    height: 130px;
-  }
-
-  /* Gallery stays 3 x 3 on phones, with smaller square-ish photos */
-  .gallery {
-    gap: 0.9rem 0.4rem;  /* more space between rows so captions don't touch the next photo */
-  }
-
-  .gallery-item img {
-    height: 115px;
-    border-radius: 6px;
-  }
-
-  .gallery-item figcaption {
-    padding-top: 0.3rem;
-    font-size: 0.72rem;
-    line-height: 1.3;
+    height: 190px;
   }
 
   .fav-col {
@@ -1505,11 +1876,166 @@ a:focus-visible {
     font-size: 1.2rem;
   }
 
-  .slide-note {
-    font-size: 0.85rem;
+    .interest-num {
+    font-size: 2.5rem;
+  }
+}
+
+
+/* ===== 14. QUICK QUESTIONS, MAP AND RESUME DOWNLOAD ===== */
+/* Quick questions: each <details> opens and closes when its question is clicked */
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  position: relative;
+  padding: 1rem 2.5rem 1rem 0;
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;  /* hides the default triangle */
+}
+
+/* A red plus sign that turns into a minus when the answer is open */
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  margin-top: -0.85rem;
+  font-size: 1.6rem;
+  font-style: normal;
+  line-height: 1.7rem;
+  color: var(--accent);
+}
+
+.faq details[open] summary::after {
+  content: "\2212";
+}
+
+.faq summary:hover {
+  color: var(--accent);
+}
+
+.faq summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.faq details p {
+  color: var(--muted);
+  max-width: 720px;
+  padding-bottom: 0.5rem;
+}
+
+/* Embedded Google Maps under the places slider: the map changes with the slide */
+.map-title {
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.map-frame {
+  display: none;  /* hidden until its place is picked in the slider */
+  width: 100%;
+  height: 320px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.slide-radio:nth-of-type(1):checked ~ .maps .map-frame:nth-child(1),
+.slide-radio:nth-of-type(2):checked ~ .maps .map-frame:nth-child(2),
+.slide-radio:nth-of-type(3):checked ~ .maps .map-frame:nth-child(3),
+.slide-radio:nth-of-type(4):checked ~ .maps .map-frame:nth-child(4),
+.slide-radio:nth-of-type(5):checked ~ .maps .map-frame:nth-child(5),
+.slide-radio:nth-of-type(6):checked ~ .maps .map-frame:nth-child(6) {
+  display: block;
+}
+
+.resume-download {
+  margin: -1rem 0 2.5rem;
+}
+
+
+/* ===== 15. PRINT LAYOUT ===== */
+/* Contact line at the top of the resume: hidden on screen, shown on paper */
+.print-only {
+  display: none;
+}
+
+/* When a page is printed or saved as PDF: white paper, dark text, no menu or buttons */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #ffffff;
+    --line: #cccccc;
+    --text: #111111;
+    --muted: #444444;
+    --accent: #b0001a;
   }
 
-  .interest-num {
-    font-size: 2.5rem;
+  .print-only {
+    display: block;
+    font-weight: 600;
+  }
+
+  .main > * {
+    animation: none;
+  }
+
+  /* No patterned background on paper */
+  body::before {
+    display: none;
+  }
+
+  .site-header,
+  .skip-link,
+  .nav-toggle,
+  .resume-download {
+    display: none;
+  }
+
+  .main {
+    padding: 0;
+    max-width: none;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+  }
+
+  body {
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  /* Keep two columns on paper so the resume fits on fewer pages */
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 0.9rem;
+  }
+
+  .resume-block {
+    margin-bottom: 1.25rem;
+  }
+
+  .card,
+  .entry {
+    break-inside: avoid;
+  }
+
+  .card:hover {
+    transform: none;
   }
 }

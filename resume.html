@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Shared stylesheet for all pages -->
   <link rel="stylesheet" href="style.css">
@@ -19,30 +19,24 @@
   <!-- Skip link for keyboard users -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <!-- Top navigation bar (same on every page).
+       On phones the links fold into a Menu button: ticking the hidden checkbox shows them (CSS only). -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
-  <label for="nav-toggle" class="menu-btn">
-    <span class="menu-icon" aria-hidden="true"></span>
-    <span class="menu-open">Menu</span>
-    <span class="menu-close">Close</span>
-  </label>
-  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
-  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
-  <div class="edge-trigger" aria-hidden="true"></div>
-
-  <!-- Left sidebar with navigation (same on every page) -->
-  <header class="sidebar">
-    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
-    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
-    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">ZULHAZRI<span>AIMAN</span></a>
+    <label for="nav-toggle" class="menu-btn">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span class="menu-open">Menu</span>
+      <span class="menu-close">Close</span>
+    </label>
     <nav aria-label="Main navigation">
       <ul class="nav-list">
-          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
-          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
-          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
-          <li><a href="gallery.html"><span class="nav-num">04</span>Gallery</a></li>
-          <li><a href="resume.html" aria-current="page"><span class="nav-num">05</span>Resume</a></li>
-          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html">My Story</a></li>
+        <li><a href="interests.html">Interests</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resume.html" aria-current="page">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -52,8 +46,14 @@
 
     <!-- Page heading -->
     <p class="eyebrow">05 / Resume</p>
+    <!-- Only shown when the resume is printed or saved as PDF, so the PDF has my name and contact details -->
+    <p class="print-only">Zulhazri Aiman bin Abdu Raji &middot; Kota Kinabalu, Sabah &middot; zulhazri.aiman@yahoo.com &middot; github.com/zzhzri</p>
     <h1 class="page-title">Resume</h1>
     <p class="lead">My education, experience, projects and skills.</p>
+    <!-- The download attribute saves the PDF instead of opening it -->
+    <p class="resume-download">
+      <a class="btn" href="zulhazri-resume.pdf" download>Download my resume (PDF)</a>
+    </p>
 
     <!-- Education -->
     <section class="resume-block" aria-labelledby="edu-heading">
@@ -156,11 +156,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
-      <p><a href="#top">Back to top</a></p>
-    </footer>
   </main>
 </body>
 </html>

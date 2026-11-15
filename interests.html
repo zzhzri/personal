@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Shared stylesheet for all pages -->
   <link rel="stylesheet" href="style.css">
@@ -19,30 +19,24 @@
   <!-- Skip link for keyboard users -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <!-- Top navigation bar (same on every page).
+       On phones the links fold into a Menu button: ticking the hidden checkbox shows them (CSS only). -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
-  <label for="nav-toggle" class="menu-btn">
-    <span class="menu-icon" aria-hidden="true"></span>
-    <span class="menu-open">Menu</span>
-    <span class="menu-close">Close</span>
-  </label>
-  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
-  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
-  <div class="edge-trigger" aria-hidden="true"></div>
-
-  <!-- Left sidebar with navigation (same on every page) -->
-  <header class="sidebar">
-    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
-    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
-    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">ZULHAZRI<span>AIMAN</span></a>
+    <label for="nav-toggle" class="menu-btn">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span class="menu-open">Menu</span>
+      <span class="menu-close">Close</span>
+    </label>
     <nav aria-label="Main navigation">
       <ul class="nav-list">
-          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
-          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
-          <li><a href="interests.html" aria-current="page"><span class="nav-num">03</span>Interests</a></li>
-          <li><a href="gallery.html"><span class="nav-num">04</span>Gallery</a></li>
-          <li><a href="resume.html"><span class="nav-num">05</span>Resume</a></li>
-          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html">My Story</a></li>
+        <li><a href="interests.html" aria-current="page">Interests</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -60,18 +54,11 @@
       <p class="interest-num" aria-hidden="true">01</p>
       <div>
         <h2>Cars and superbikes</h2>
-        <p>I'm a car enthusiast through and through. I love every kind of car, from Malaysian builds and JDM legends to European sports cars. I'm also into superbikes too. I could watch people fix and modify cars and bikes for hours.</p>
+        <p>I'm a car enthusiast through and through. I love every kind of car, from Malaysian builds and JDM legends to European sports cars. I'm also into superbikes. I could watch people fix and modify cars and bikes for hours.</p>
         <p>For me, the fun is in the details which seeing how each part changes the way a machine looks, sounds and drives. These are the brands I follow most.</p>
-        <!-- My top picks: photo with a small caption; clicking it searches Google for that car or bike -->
+        <!-- My top picks: three photos in a row with a small caption; clicking one searches Google for that car or bike -->
         <div class="game-group">
-          <h3>My top picks</h3>
           <ul class="car-grid">
-            <li>
-              <a class="car-card" href="https://www.google.com/search?q=Perodua+Axia" target="_blank" rel="noopener">
-                <img src="axia.jpg" alt="Photo of the Perodua Axia" width="800" height="450" loading="lazy">
-                <span class="car-caption">Perodua Axia</span>
-              </a>
-            </li>
             <li>
               <a class="car-card" href="https://www.google.com/search?q=Mitsubishi+Lancer+Evolution+III" target="_blank" rel="noopener">
                 <img src="evo3.jpg" alt="Photo of the Mitsubishi Lancer Evolution III" width="800" height="450" loading="lazy">
@@ -256,7 +243,7 @@
       <p class="interest-num" aria-hidden="true">04</p>
       <div>
         <h2>Places I want to go</h2>
-        <p>My travel bucket list and click a photo to read more about it.</p>
+        <p>My travel bucket list. Click a photo to read more about it.</p>
         <!-- Slider made with HTML and CSS only: one hidden radio button per place.
              The arrows and dots are labels that tick a radio button, and CSS shows the matching slide. -->
         <div class="slider">
@@ -273,7 +260,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">01 / 06</span>
                   <span class="slide-name">Suzuka Circuit, Japan</span>
-                  <span class="slide-note">The figure-eight track of the Japanese Grand Prix. Top of my list.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-6"><span class="sr-only">Previous place</span></label>
@@ -285,7 +271,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">02 / 06</span>
                   <span class="slide-name">Fukuoka, Japan</span>
-                  <span class="slide-note">Hakata ramen, street-food stalls and a city by the sea.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-1"><span class="sr-only">Previous place</span></label>
@@ -297,7 +282,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">03 / 06</span>
                   <span class="slide-name">Greece</span>
-                  <span class="slide-note">The Parthenon, the islands and thousands of years of history.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-2"><span class="sr-only">Previous place</span></label>
@@ -309,7 +293,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">04 / 06</span>
                   <span class="slide-name">France</span>
-                  <span class="slide-note">Paris, the Arc de Triomphe and a lot of good food.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-3"><span class="sr-only">Previous place</span></label>
@@ -321,7 +304,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">05 / 06</span>
                   <span class="slide-name">Germany</span>
-                  <span class="slide-note">The Brandenburg Gate, the Autobahn and my favourite car brands.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-4"><span class="sr-only">Previous place</span></label>
@@ -333,7 +315,6 @@
                 <span class="slide-caption">
                   <span class="slide-count">06 / 06</span>
                   <span class="slide-name">Italy</span>
-                  <span class="slide-note">The Colosseum, Ferrari and old cities full of history.</span>
                 </span>
               </a>
               <label class="arrow arrow-prev" for="place-5"><span class="sr-only">Previous place</span></label>
@@ -349,6 +330,16 @@
             <label for="place-5"><span class="sr-only">Show Germany</span></label>
             <label for="place-6"><span class="sr-only">Show Italy</span></label>
           </div>
+          <!-- One map per place. Like the slides, only the map that matches the ticked radio button is shown -->
+          <h3 class="map-title">On the map</h3>
+          <div class="maps">
+            <iframe class="map-frame" src="https://www.google.com/maps?q=Suzuka+International+Racing+Course&amp;output=embed" title="Google Map showing Suzuka Circuit, Japan"></iframe>
+            <iframe class="map-frame" src="https://www.google.com/maps?q=Fukuoka,+Japan&amp;output=embed" title="Google Map showing Fukuoka, Japan"></iframe>
+            <iframe class="map-frame" src="https://www.google.com/maps?q=Greece&amp;output=embed" title="Google Map showing Greece"></iframe>
+            <iframe class="map-frame" src="https://www.google.com/maps?q=France&amp;output=embed" title="Google Map showing France"></iframe>
+            <iframe class="map-frame" src="https://www.google.com/maps?q=Germany&amp;output=embed" title="Google Map showing Germany"></iframe>
+            <iframe class="map-frame" src="https://www.google.com/maps?q=Italy&amp;output=embed" title="Google Map showing Italy"></iframe>
+          </div>
         </div>
       </div>
     </article>
@@ -358,8 +349,8 @@
       <p class="interest-num" aria-hidden="true">05</p>
       <div>
         <h2>Gunpla</h2>
-        <p>I build Gunpla which is the Gundam plastic model kits from Japan. By putting a kit together piece by piece from cutting parts off the frame to the final pose is relaxing in the same way coding is: follow the steps, fix your mistakes and end up with something you made yourself.</p>
-        <p>So far I have built High Grade (HG) kits which is the 1/144 scale that is a good starting point for beginners. Here are a few from my collection.</p>
+        <p>I build Gunpla, the Gundam plastic model kits from Japan. Putting a kit together piece by piece from cutting parts off the frame to the final pose is relaxing in the same way coding is: follow the steps, fix your mistakes and end up with something you made yourself.</p>
+        <p>So far I have built High Grade (HG) kits, a 1/144 scale grade that is a good starting point for beginners. Here are a few from my collection.</p>
         <figure class="interest-figure">
           <img class="interest-photo" src="gunpla.jpg" alt="Five HG Gundam model kits built by Zulhazri on his desk: Gundam Exia, Gundam Vidar, Gundam Barbatos Lupus, Banshee and Kamiki Burning Gundam" width="1400" height="788">
           <figcaption>From left: Gundam Exia, Gundam Vidar, Gundam Barbatos Lupus, Gundam Banshee and Kamiki Burning Gundam</figcaption>
@@ -373,11 +364,6 @@
       </div>
     </article>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
-      <p><a href="#top">Back to top</a></p>
-    </footer>
   </main>
 </body>
 </html>

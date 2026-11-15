@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Shared stylesheet for all pages -->
   <link rel="stylesheet" href="style.css">
@@ -19,30 +19,24 @@
   <!-- Skip link for keyboard users -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <!-- Top navigation bar (same on every page).
+       On phones the links fold into a Menu button: ticking the hidden checkbox shows them (CSS only). -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
-  <label for="nav-toggle" class="menu-btn">
-    <span class="menu-icon" aria-hidden="true"></span>
-    <span class="menu-open">Menu</span>
-    <span class="menu-close">Close</span>
-  </label>
-  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
-  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
-  <div class="edge-trigger" aria-hidden="true"></div>
-
-  <!-- Left sidebar with navigation (same on every page) -->
-  <header class="sidebar">
-    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
-    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
-    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">ZULHAZRI<span>AIMAN</span></a>
+    <label for="nav-toggle" class="menu-btn">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span class="menu-open">Menu</span>
+      <span class="menu-close">Close</span>
+    </label>
     <nav aria-label="Main navigation">
       <ul class="nav-list">
-          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
-          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
-          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
-          <li><a href="gallery.html" aria-current="page"><span class="nav-num">04</span>Gallery</a></li>
-          <li><a href="resume.html"><span class="nav-num">05</span>Resume</a></li>
-          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html">My Story</a></li>
+        <li><a href="interests.html">Interests</a></li>
+        <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -53,53 +47,135 @@
     <!-- Page heading -->
     <p class="eyebrow">04 / Gallery</p>
     <h1 class="page-title">Snapshots</h1>
-    <p class="lead">A few moments from my life wich my amazing friends.</p>
+    <p class="lead">A few moments from my life with my amazing friends.</p>
 
-    <!-- Photo grid: nine photos, three per row, no borders. Each photo has a short description under it -->
-    <div class="gallery">
-      <figure class="gallery-item">
-        <img src="gallery1.jpg" alt="Zulhazri with friends after a class activity" width="800" height="600" loading="lazy">
-        <figcaption>After class activity</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery2.jpg" alt="Zulhazri's group as overall champion at a camping trip" width="800" height="600" loading="lazy">
-        <figcaption>Overall champion during camping</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery3.jpg" alt="Zulhazri with classmates on the last day of school" width="800" height="600" loading="lazy">
-        <figcaption>Last day of school</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery4.jpg" alt="Zulhazri with friends at an outdoor activity" width="800" height="600" loading="lazy">
-        <figcaption>Outdoor activity</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery5.jpg" alt="Zulhazri with friends after the semester 1 final exam" width="800" height="600" loading="lazy">
-        <figcaption>After semester 1 final exam</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery6.jpg" alt="Zulhazri celebrating Eid in 2025" width="800" height="600" loading="lazy">
-        <figcaption>Eid 2025</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery7.jpg" alt="Zulhazri with friends heading to an event at parking B" width="800" height="600" loading="lazy">
-        <figcaption>Going to event at parking B</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery8.jpg" alt="Zulhazri at the semester 2 appreciation ceremony" width="800" height="600" loading="lazy">
-        <figcaption>During appreciation ceremony semester 2</figcaption>
-      </figure>
-      <figure class="gallery-item">
-        <img src="gallery9.jpg" alt="Zulhazri stopping for a quick matcha" width="800" height="600" loading="lazy">
-        <figcaption>Quick matcha</figcaption>
-      </figure>
+    <!-- Photo slider made with HTML and CSS only (same idea as the places slider on the Interests page):
+         one hidden radio button per photo; the arrows and dots tick a radio button and CSS shows that photo -->
+    <div class="slider photo-slider">
+      <input class="slide-radio" type="radio" name="photo" id="photo-1" checked>
+      <input class="slide-radio" type="radio" name="photo" id="photo-2">
+      <input class="slide-radio" type="radio" name="photo" id="photo-3">
+      <input class="slide-radio" type="radio" name="photo" id="photo-4">
+      <input class="slide-radio" type="radio" name="photo" id="photo-5">
+      <input class="slide-radio" type="radio" name="photo" id="photo-6">
+      <input class="slide-radio" type="radio" name="photo" id="photo-7">
+      <input class="slide-radio" type="radio" name="photo" id="photo-8">
+      <input class="slide-radio" type="radio" name="photo" id="photo-9">
+      <ul class="slides">
+        <li class="slide">
+          <figure>
+            <img src="gallery1.jpg" alt="Zulhazri with friends after a class activity" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">01 / 09</span>
+              <span class="slide-name">After class activity</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-9"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-2"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery2.jpg" alt="Zulhazri's group as overall champion at a camping trip" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">02 / 09</span>
+              <span class="slide-name">Overall champion during camping</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-1"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-3"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery3.jpg" alt="Zulhazri with classmates on the last day of school" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">03 / 09</span>
+              <span class="slide-name">Last day of school</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-2"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-4"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery4.jpg" alt="Zulhazri with friends at an outdoor activity" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">04 / 09</span>
+              <span class="slide-name">Outdoor activity</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-3"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-5"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery5.jpg" alt="Zulhazri with friends after the semester 1 final exam" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">05 / 09</span>
+              <span class="slide-name">After semester 1 final exam</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-4"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-6"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery6.jpg" alt="Zulhazri celebrating Eid in 2025" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">06 / 09</span>
+              <span class="slide-name">Eid 2025</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-5"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-7"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery7.jpg" alt="Zulhazri with friends heading to an event at parking B" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">07 / 09</span>
+              <span class="slide-name">Going to event at parking B</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-6"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-8"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery8.jpg" alt="Zulhazri at the semester 2 appreciation ceremony" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">08 / 09</span>
+              <span class="slide-name">During appreciation ceremony semester 2</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-7"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-9"><span class="sr-only">Next photo</span></label>
+        </li>
+        <li class="slide">
+          <figure>
+            <img src="gallery9.jpg" alt="Zulhazri stopping for a quick matcha" width="800" height="600">
+            <figcaption class="slide-caption">
+              <span class="slide-count">09 / 09</span>
+              <span class="slide-name">Quick matcha</span>
+            </figcaption>
+          </figure>
+          <label class="arrow arrow-prev" for="photo-8"><span class="sr-only">Previous photo</span></label>
+          <label class="arrow arrow-next" for="photo-1"><span class="sr-only">Next photo</span></label>
+        </li>
+      </ul>
+      <!-- Dots under the slider: one per photo -->
+      <div class="dots">
+        <label for="photo-1"><span class="sr-only">Show photo 1: After class activity</span></label>
+        <label for="photo-2"><span class="sr-only">Show photo 2: Overall champion during camping</span></label>
+        <label for="photo-3"><span class="sr-only">Show photo 3: Last day of school</span></label>
+        <label for="photo-4"><span class="sr-only">Show photo 4: Outdoor activity</span></label>
+        <label for="photo-5"><span class="sr-only">Show photo 5: After semester 1 final exam</span></label>
+        <label for="photo-6"><span class="sr-only">Show photo 6: Eid 2025</span></label>
+        <label for="photo-7"><span class="sr-only">Show photo 7: Going to event at parking B</span></label>
+        <label for="photo-8"><span class="sr-only">Show photo 8: During appreciation ceremony semester 2</span></label>
+        <label for="photo-9"><span class="sr-only">Show photo 9: Quick matcha</span></label>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
-      <p><a href="#top">Back to top</a></p>
-    </footer>
   </main>
 </body>
 </html>

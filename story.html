@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The story of Zulhazri Aiman bin Abdu Raji, a Diploma in Information Management student from Kota Kinabalu, Sabah.">
+  <meta name="description" content="The story of Zulhazri Aiman bin Abdu Raji from Kota Kinabalu, Sabah.">
   <title>My Story | Zulhazri Aiman bin Abdu Raji</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Shared stylesheet for all pages -->
   <link rel="stylesheet" href="style.css">
@@ -19,30 +19,24 @@
   <!-- Skip link for keyboard users -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <!-- Top navigation bar (same on every page).
+       On phones the links fold into a Menu button: ticking the hidden checkbox shows them (CSS only). -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
-  <label for="nav-toggle" class="menu-btn">
-    <span class="menu-icon" aria-hidden="true"></span>
-    <span class="menu-open">Menu</span>
-    <span class="menu-close">Close</span>
-  </label>
-  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
-  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
-  <div class="edge-trigger" aria-hidden="true"></div>
-
-  <!-- Left sidebar with navigation (same on every page) -->
-  <header class="sidebar">
-    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
-    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
-    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">ZULHAZRI<span>AIMAN</span></a>
+    <label for="nav-toggle" class="menu-btn">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span class="menu-open">Menu</span>
+      <span class="menu-close">Close</span>
+    </label>
     <nav aria-label="Main navigation">
       <ul class="nav-list">
-          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
-          <li><a href="story.html" aria-current="page"><span class="nav-num">02</span>My Story</a></li>
-          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
-          <li><a href="gallery.html"><span class="nav-num">04</span>Gallery</a></li>
-          <li><a href="resume.html"><span class="nav-num">05</span>Resume</a></li>
-          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html" aria-current="page">My Story</a></li>
+        <li><a href="interests.html">Interests</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -55,27 +49,62 @@
     <h1 class="page-title">How I got here</h1>
     <p class="lead">Not a straight road, but every turn taught me something.</p>
 
-    <!-- Timeline of my story -->
+    <!-- Timeline of my story: text on the left and a photo with a short description on the right for each chapter (photos stack under the text on phones) -->
     <ol class="timeline">
-      <li>
-        <span class="timeline-date">Growing up</span>
-        <h2>Born and raised in Kota Kinabalu</h2>
-        <p>I grew up in Kota Kinabalu, Sabah and went to secondary school at SMK Kinarut in Papar. I sat for my SPM in 2023.</p>
+      <li class="has-photo">
+        <div>
+          <span class="timeline-date">2012 &ndash; 2018</span>
+          <h2>Born in Kota Kinabalu, raised in Kinarut</h2>
+          <p>I was born in Kota Kinabalu, Sabah and lived there until I was five. When I was six, my family moved to Kinarut where I went to primary school at SK Pekan Kinarut. From Year 1 to Year 6 I was one of my school's athletes, mostly in sprinting. Lining up for a race taught me early how much I like to compete and how good it feels to beat my own best time. It is also where I met friends who years later I ended up studying with again at UiTM.</p>
+        </div>
+        <figure class="timeline-figure">
+          <img class="timeline-photo" src="story1.jpg" alt="[Describe photo: primary school or sports day]" width="800" height="600" loading="lazy">
+          <figcaption>Me during pre-school</figcaption>
+        </figure>
       </li>
-      <li>
-        <span class="timeline-date">2024</span>
-        <h2>A fourth choice that grew on me</h2>
-        <p>To be honest, Information Management was my fourth choice in UPU. I accepted it because I wanted to keep studying and started my diploma at UiTM Kampus Samarahan 1 in Sarawak in September 2024. It turned out to be more interesting than I expected especially the parts about how information is organised, described and kept safe. I also met amazing people along the way.</p>
+      <li class="has-photo">
+        <div>
+          <span class="timeline-date">2019 &ndash; 2023</span>
+          <h2>Secondary school at SMK Kinarut</h2>
+          <p>In secondary school at SMK Kinarut in Papar, I was not the student in every club or competition. My race was with my exam results. My grades went up and down but every time I wanted to do better than my last result and that habit of chasing my own score has stayed with me. I sat for my SPM in 2023.</p>
+        </div>
+        <figure class="timeline-figure">
+          <img class="timeline-photo" src="story2.jpg" alt="Zulhazri with his classmates in their last group photo at SMK Kinarut" width="800" height="600" loading="lazy">
+          <figcaption>Last group photo of my classmates</figcaption>
+        </figure>
       </li>
-      <li>
-        <span class="timeline-date">Along the way</span>
-        <h2>Discovering code</h2>
-        <p>Through my database classes I started building web systems with PHP and MySQL. Seeing something I typed turn into a working system was what hooked me and now I build things even when they are not part of an assignment.</p>
+      <li class="has-photo">
+        <div>
+          <span class="timeline-date">2023 &ndash; 2024</span>
+          <h2>The wait after SPM</h2>
+          <p>After SPM I stayed at home while waiting to enter UiTM. It was a quiet break between school and the next chapter and the calm before a busy few years.</p>
+        </div>
+        <figure class="timeline-figure">
+          <img class="timeline-photo" src="story3.jpg" alt="Zulhazri after receiving his SPM results" width="800" height="600" loading="lazy">
+          <figcaption>After I got my SPM result</figcaption>
+        </figure>
       </li>
-      <li>
-        <span class="timeline-date">Jul &ndash; Sep 2026</span>
-        <h2>Internship at SESB</h2>
-        <p>I did my industrial training in the Security &amp; Intelligence Department at Sabah Electricity Sdn. Bhd. I saw that staff still applied for access cards on paper then I suggested putting it online and built the system myself. I also built a system for reporting faulty CCTV cameras and it was the first time my work was used to solve a real problem.</p>
+      <li class="has-photo">
+        <div>
+          <span class="timeline-date">2024</span>
+          <h2>A fourth choice that grew on me</h2>
+          <p>To be honest, Information Management was my fourth choice in UPU. I accepted it because I wanted to keep studying and started my diploma at UiTM Kampus Samarahan 1 in Sarawak in September 2024. It turned out to be more interesting than I expected and I also met amazing people along the way.</p>
+        </div>
+        <figure class="timeline-figure">
+          <img class="timeline-photo" src="story4.jpg" alt="Zulhazri with friends at an open house at Afif's house" width="800" height="600" loading="lazy">
+          <figcaption>Open house at Afif's house with my UiTM friends</figcaption>
+        </figure>
+      </li>
+      <li class="has-photo">
+        <div>
+          <span class="timeline-date">Jul &ndash; Sep 2026</span>
+          <h2>Internship at SESB</h2>
+          <p>I did my industrial training in the Security &amp; Intelligence Department at Sabah Electricity Sdn. Bhd. I saw that staff still applied for access cards on paper then I suggested putting it online and built the system myself. I also built a system for reporting faulty CCTV cameras and it was the first time my work was used to solve a real problem.</p>
+        </div>
+        <figure class="timeline-figure">
+          <img class="timeline-photo" src="story5.jpg" alt="Zulhazri during his internship at SESB" width="800" height="600" loading="lazy">
+          <figcaption>Me during internship</figcaption>
+        </figure>
       </li>
       <li>
         <span class="timeline-date">What's next</span>
@@ -84,11 +113,35 @@
       </li>
     </ol>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
-      <p><a href="#top">Back to top</a></p>
-    </footer>
+    <!-- Quick questions: each answer opens with a click, using the built-in <details> element (no JavaScript) -->
+    <section class="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="section-title">Quick questions</h2>
+      <details>
+        <summary>Why cars?</summary>
+        <p>I like knowing how things work and engines are the best example. Most of the time I enjoy learning about them from Honda's B and K series to Proton's Campro and Mitsubishi's 4G63 and I could watch people fix and modify cars in my leisure time.</p>
+      </details>
+      <details>
+        <summary>What is your dream car?</summary>
+        <p>A clean Honda Civic EG Ferio. I'm working and saving up for one in the future so it is a long-term goal for me rather than a dream that stays a dream.</p>
+      </details>
+      <details>
+        <summary>How many Gunpla kits have you built?</summary>
+        <p>Five so far, all of them is High Grade which is Gundam Exia, Gundam Vidar, Gundam Barbatos Lupus, Banshee and Kamiki Burning Gundam.</p>
+      </details>
+      <details>
+        <summary>What do you play with friends?</summary>
+        <p>Mostly GTA Online, Dota 2 and FC 26.</p>
+      </details>
+      <details>
+        <summary>What song is on repeat right now?</summary>
+        <p>MONALISA by Eemrun and Concerto. Eemrun is my favourite artist and his album Menara Berkembar is my favourite album.</p>
+      </details>
+      <details>
+        <summary>Where would you go first?</summary>
+        <p>Suzuka Circuit in Japan which i want to see the figure-eight track of the Japanese Grand Prix in person.</p>
+      </details>
+    </section>
+
   </main>
 </body>
 </html>
