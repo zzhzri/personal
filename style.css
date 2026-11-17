@@ -1,7 +1,7 @@
 /*
   IMD318 Individual Assignment: Personal Website
   Author: Zulhazri Aiman bin Abdu Raji
-  File: style.css (shared by all six pages)
+  File: style.css (shared by all five pages)
 
   Design idea: styled like a performance car launch page. A dark body,
   one racing-red accent, big bold italic headings like a model badge,
@@ -19,11 +19,12 @@
     8. My Story timeline
     9. Interests page
    10. Gallery
-   11. Resume page
-   12. Contact page
-   13. Responsive layout (tablet and phone)
-   14. Quick questions, map and resume download
-   15. Print layout (used for the resume PDF)
+   11. Responsive layout (tablet and phone)
+   12. Quick questions and map
+   13. Next Chapter route
+   14. Launch reveal (home)
+   15. Red text selection
+   16. Chequered finish line
 */
 
 
@@ -65,11 +66,11 @@ body {
 }
 
 /*
-  Page background: a mix of three faint layers that sits still while the page scrolls.
-  1. Carbon fibre weave (two tiny diagonal checks)
-  2. A faint blueprint grid
-  3. A few thin red speed lines
-  plus a soft red glow in two corners. All drawn with CSS gradients, no image files.
+  Page background: "speed stripes". It sits still while the page scrolls.
+  1. A very fine film grain so the black does not look flat (a tiny SVG noise pattern)
+  2. Three thin red stripes towards the right, getting fainter, like a car passing at speed
+  3. A soft red glow in the top right corner
+  All drawn with CSS, no image files.
 */
 body::before {
   content: "";
@@ -80,16 +81,29 @@ body::before {
   bottom: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: var(--bg);
+  background-color: #08080a;
   background-image:
-    radial-gradient(ellipse at 100% 0%, rgba(213, 0, 33, 0.2), rgba(0, 0, 0, 0) 45%),
-    radial-gradient(ellipse at 0% 100%, rgba(213, 0, 33, 0.12), rgba(0, 0, 0, 0) 45%),
-    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 160px, rgba(255, 45, 61, 0.07) 160px, rgba(255, 45, 61, 0.07) 162px),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, rgba(0, 0, 0, 0) 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, rgba(0, 0, 0, 0) 1px),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, 0.03) 75%),
-    linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, 0.03) 75%);
-  background-size: auto, auto, auto, 80px 80px, 80px 80px, 8px 8px, 8px 8px;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(115deg,
+      rgba(0, 0, 0, 0) 72%,
+      rgba(213, 0, 33, 0.5) 72%, rgba(213, 0, 33, 0.5) 72.4%,
+      rgba(0, 0, 0, 0) 72.4%, rgba(0, 0, 0, 0) 74%,
+      rgba(213, 0, 33, 0.28) 74%, rgba(213, 0, 33, 0.28) 74.2%,
+      rgba(0, 0, 0, 0) 74.2%, rgba(0, 0, 0, 0) 75.6%,
+      rgba(213, 0, 33, 0.14) 75.6%, rgba(213, 0, 33, 0.14) 75.75%,
+      rgba(0, 0, 0, 0) 75.75%),
+    radial-gradient(ellipse 50% 60% at 100% 0%, rgba(213, 0, 33, 0.18), rgba(0, 0, 0, 0) 70%);
+  background-size: 200px 200px, auto, auto;
+}
+
+/* Phones: the screen is too narrow to keep the stripes clear of the text, so only the grain and glow stay */
+@media (max-width: 700px) {
+  body::before {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 80% 40% at 100% 0%, rgba(213, 0, 33, 0.22), rgba(0, 0, 0, 0) 70%);
+    background-size: 200px 200px, auto;
+  }
 }
 
 h1,
@@ -1096,6 +1110,27 @@ a:focus-visible {
   border-radius: var(--radius);
 }
 
+/* The artist and album each link to YouTube: the border turns red on hover and a small arrow follows the name */
+.fav-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.fav-link .fav-item {
+  transition: border-color 0.2s ease;
+}
+
+.fav-link:hover .fav-item,
+.fav-link:focus-visible .fav-item {
+  border-color: var(--accent);
+}
+
+.fav-link .fav-name::after {
+  content: " \2197";
+  color: var(--accent);
+}
+
 .fav-item img {
   width: 100%;
   height: 150px;
@@ -1457,172 +1492,7 @@ a:focus-visible {
 /* The gallery uses the photo slider from section 9 (.photo-slider) */
 
 
-/* ===== 11. RESUME PAGE ===== */
-.resume-block {
-  margin-bottom: 4rem;
-}
-
-.resume-block > h2 {
-  font-size: 2rem;
-  font-weight: 800;
-  font-style: italic;
-  text-transform: uppercase;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 1.25rem;
-}
-
-.entry {
-  margin-bottom: 1.5rem;
-}
-
-/* Title on the left, dates on the right */
-.entry-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-}
-
-.entry-head h3 {
-  font-size: 1.35rem;
-  font-style: italic;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.entry-date {
-  font-size: 0.85rem;
-  color: var(--accent);
-  margin: 0;
-}
-
-.entry-org {
-  color: var(--muted);
-  margin: 0.2rem 0 0.75rem;
-}
-
-.entry ul {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-.entry li {
-  margin-bottom: 0.35rem;
-}
-
-.two-col {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-}
-
-.card-meta {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-
-/* ===== 12. CONTACT PAGE ===== */
-/* Browsers italicise <address> by default, so reset it */
-.contact-block {
-  font-style: normal;
-}
-
-.contact-label {
-  margin: 0 0 0.3rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* The email is the main link, shown huge like a headline */
-.contact-email {
-  display: inline-block;
-  font-family: var(--font-head);
-  font-size: 3.4rem;
-  font-weight: 800;
-  font-style: italic;
-  line-height: 1.1;
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 4px solid var(--accent);
-  overflow-wrap: anywhere;  /* lets the long address wrap on small screens */
-  transition: color 0.2s ease;
-}
-
-.contact-email:hover {
-  color: var(--accent);
-}
-
-.contact-socials {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 3rem 0 0;
-  padding: 0;
-}
-
-.contact-socials a {
-  display: block;
-  min-width: 240px;
-  padding: 1rem 1.25rem;
-  background-color: var(--panel);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius);
-  color: var(--text);
-  text-decoration: none;
-  transition: border-color 0.2s ease;
-}
-
-.contact-socials a:hover {
-  border-color: var(--accent);
-}
-
-/* Location and availability, shown as two small labelled lines */
-.contact-facts {
-  list-style: none;
-  margin: -1rem 0 3rem;
-  padding: 0;
-}
-
-.contact-facts li {
-  margin-bottom: 0.4rem;
-}
-
-.contact-fact-label {
-  display: inline-block;
-  min-width: 110px;
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.contact-type {
-  display: block;
-  font-family: var(--font-head);
-  font-size: 1.4rem;
-  font-weight: 800;
-  font-style: italic;
-  text-transform: uppercase;
-}
-
-.contact-handle {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-
-
-/* ===== 13. RESPONSIVE LAYOUT ===== */
+/* ===== 11. RESPONSIVE LAYOUT ===== */
 /* Tablet: fewer columns */
 @media (max-width: 1100px) {
   .main {
@@ -1787,22 +1657,9 @@ a:focus-visible {
     height: 220px;
   }
 
-  .contact-email {
-    font-size: 1.8rem;
-  }
 
-  .contact-fact-label {
-    display: block;
-  }
 
-  .contact-socials a {
-    min-width: 0;
-    width: 100%;
-  }
 
-  .contact-socials li {
-    width: 100%;
-  }
 
   .interest {
     padding: 2.5rem 0;
@@ -1822,9 +1679,6 @@ a:focus-visible {
     font-size: 0.9rem;
   }
 
-  .two-col {
-    grid-template-columns: 1fr;
-  }
 
   .interest {
     grid-template-columns: 1fr;
@@ -1882,7 +1736,7 @@ a:focus-visible {
 }
 
 
-/* ===== 14. QUICK QUESTIONS, MAP AND RESUME DOWNLOAD ===== */
+/* ===== 12. QUICK QUESTIONS AND MAP ===== */
 /* Quick questions: each <details> opens and closes when its question is clicked */
 .faq details {
   border-bottom: 1px solid var(--line);
@@ -1958,84 +1812,411 @@ a:focus-visible {
   display: block;
 }
 
-.resume-download {
-  margin: -1rem 0 2.5rem;
+
+/* ===== 13. NEXT CHAPTER ROUTE ===== */
+/* The plans zigzag down the page like a route: odd cards on the left, even cards on the right */
+.route {
+  list-style: none;
+  margin: 3.5rem 0 0;
+  padding: 0;
+}
+
+.route-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  width: 72%;
+  min-height: 280px;
+  margin-bottom: 7rem;  /* the gap the joining line runs through */
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease;
+}
+
+.route-stop:nth-child(odd) {
+  margin-right: auto;
+}
+
+.route-stop:nth-child(even) {
+  margin-left: auto;
+}
+
+.route-stop:last-child {
+  margin-bottom: 0;
+}
+
+.route-stop:hover {
+  border-color: var(--accent);
+}
+
+/* The red line to the next card. A diagonal is drawn with a gradient that is
+   only coloured along the middle of the box. The list is 100% wide and each card
+   is 72%, so the line runs between 28% and 72% of the list's width. */
+.route-stop:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 61.1%;    /* 44% of the list = 61.1% of a 72% card */
+  height: 7rem;
+}
+
+/* Left card: line goes down and to the right */
+.route-stop:nth-child(odd):not(:last-child)::after {
+  left: 38.9%;     /* 28% of the list */
+  background-image: linear-gradient(to top right, rgba(255, 45, 61, 0) 49.3%, #ff2d3d 49.3%, #ff2d3d 50.7%, rgba(255, 45, 61, 0) 50.7%);
+}
+
+/* Right card: line goes down and to the left, starting from this card's left edge (28% of the list) */
+.route-stop:nth-child(even):not(:last-child)::after {
+  left: 0;
+  background-image: linear-gradient(to top left, rgba(255, 45, 61, 0) 49.3%, #ff2d3d 49.3%, #ff2d3d 50.7%, rgba(255, 45, 61, 0) 50.7%);
+}
+
+/* Cards without a photo: the text fills the whole card */
+.route-stop.text-only {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+
+/* A wide image such as a result slip, shown under the card text.
+   The caption uses the same white bold text as the photo captions, but sits in a
+   dark bar under the slip so it does not cover any of the numbers. */
+.route-result {
+  margin: 1.25rem 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.route-result img {
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  background-color: #ffffff;  /* the slip itself is white, so the frame matches it */
+}
+
+.route-result figcaption {
+  padding: 0.6rem 0.9rem;
+  background-color: #000000;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Photo on the left of each card, with its caption laid over the bottom */
+.route-figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;  /* rounds the photo's corners to match the card */
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.route-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Photos that link to a Google search: the link fills the photo area and the photo zooms in slightly on hover */
+.route-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.route-link .route-figure {
+  height: 100%;
+}
+
+.route-link:hover img,
+.route-link:focus-visible img {
+  transform: scale(1.05);
+}
+
+.route-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* A small arrow after the caption shows the photo opens a link */
+.route-link figcaption::after {
+  content: " \2197";
+  color: var(--accent);
+}
+
+.route-figure figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem 0.9rem 0.7rem;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Text side: centred top to bottom so short and long cards both look balanced */
+.route-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 2.25rem;
+}
+
+.route-label {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.route-text h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0.35rem 0 0.9rem;
+}
+
+.route-text p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.route-end {
+  max-width: 600px;
+  margin: 5rem auto 0;
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+/* Tablet: cards nearly full width, smaller photo */
+@media (max-width: 1100px) {
+  .route-stop {
+    width: 85%;
+    grid-template-columns: 220px 1fr;
+  }
+
+  .route-stop.text-only {
+    grid-template-columns: 1fr;
+  }
+
+  .route-stop:not(:last-child)::after {
+    width: 82.4%;  /* 70% of the list = 82.4% of an 85% card */
+  }
+
+  .route-stop:nth-child(odd):not(:last-child)::after {
+    left: 17.6%;   /* 15% of the list */
+  }
+
+  .route-text {
+    padding: 1.5rem 1.75rem;
+  }
+
+  .route-text h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Phone: one column, photo on top, a short straight line between cards */
+@media (max-width: 700px) {
+  .route-stop,
+  .route-stop:nth-child(odd),
+  .route-stop:nth-child(even) {
+    width: 100%;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    margin: 0 0 3rem;
+  }
+
+  .route-stop:last-child {
+    margin-bottom: 0;
+  }
+
+  .route-figure,
+  .route-link {
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .route-figure img {
+    height: 220px;
+  }
+
+  .route-text {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .route-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .route-stop:nth-child(odd):not(:last-child)::after,
+  .route-stop:nth-child(even):not(:last-child)::after {
+    left: 50%;
+    width: 3px;
+    height: 3rem;
+    margin-left: -1.5px;
+    background-image: none;
+    background-color: var(--accent);
+  }
+
+  .route-end {
+    font-size: 1.2rem;
+    margin-top: 3.5rem;
+  }
 }
 
 
-/* ===== 15. PRINT LAYOUT ===== */
-/* Contact line at the top of the resume: hidden on screen, shown on paper */
-.print-only {
-  display: none;
+/* ===== 14. LAUNCH REVEAL (HOME) ===== */
+/*
+  Launch reveal: plays once when the home page opens, about 1.5 seconds in total.
+    0.0s  "Zulhazri" slides in, then "Aiman" just after it
+    0.5s  a light sweeps across the name, like headlights passing
+    0.8s  the tagline, intro and buttons rise in
+    0.9s  the photo fades in
+*/
+
+/* The hero runs its own reveal, so turn off the normal page-load rise for it */
+.main > .hero {
+  animation: none;
 }
 
-/* When a page is printed or saved as PDF: white paper, dark text, no menu or buttons */
-@media print {
-  :root {
-    --bg: #ffffff;
-    --panel: #ffffff;
-    --panel-2: #ffffff;
-    --line: #cccccc;
-    --text: #111111;
-    --muted: #444444;
-    --accent: #b0001a;
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-80px) skewX(-8deg);
   }
 
-  .print-only {
-    display: block;
-    font-weight: 600;
-  }
-
-  .main > * {
-    animation: none;
-  }
-
-  /* No patterned background on paper */
-  body::before {
-    display: none;
-  }
-
-  .site-header,
-  .skip-link,
-  .nav-toggle,
-  .resume-download {
-    display: none;
-  }
-
-  .main {
-    padding: 0;
-    max-width: none;
-  }
-
-  .page-title {
-    font-size: 2.2rem;
-  }
-
-  body {
-    font-size: 10pt;
-    line-height: 1.5;
-  }
-
-  /* Keep two columns on paper so the resume fits on fewer pages */
-  .two-col {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-  }
-
-  .card {
-    padding: 0.9rem;
-  }
-
-  .resume-block {
-    margin-bottom: 1.25rem;
-  }
-
-  .card,
-  .entry {
-    break-inside: avoid;
-  }
-
-  .card:hover {
+  to {
+    opacity: 1;
     transform: none;
   }
+}
+
+@keyframes light-sweep {
+  0% {
+    transform: translateX(-60%) skewX(-20deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(380%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: brightness(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* The name: each line slides in from the left */
+.hero h1 {
+  position: relative;
+  animation: slide-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero h1 span {
+  animation: slide-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.12s both;
+}
+
+/* The headlight: a soft white bar that crosses the name once. It starts off to the
+   left and invisible, so if the animation is turned off it never shows */
+.hero h1::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 25%;
+  height: 120%;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  mix-blend-mode: overlay;
+  opacity: 0;
+  pointer-events: none;
+  animation: light-sweep 0.7s ease-in-out 0.5s both;
+}
+
+/* The rest of the text rises in after the name */
+.hero-tagline,
+.hero .lead,
+.hero-actions {
+  animation: rise 0.5s ease both;
+}
+
+.hero-tagline {
+  animation-delay: 0.8s;
+}
+
+.hero .lead {
+  animation-delay: 0.9s;
+}
+
+.hero-actions {
+  animation-delay: 1s;
+}
+
+/* The photo fades up from dark, like lights coming on */
+.hero-photo {
+  animation: photo-in 0.7s ease 0.9s both;
+}
+
+
+/* No headlight sweep for people who ask their system to reduce motion
+   (the general reduced-motion rule in section 2 does not reach ::after) */
+@media (prefers-reduced-motion: reduce) {
+  .hero h1::after {
+    display: none;
+  }
+}
+
+
+/* ===== 15. RED TEXT SELECTION ===== */
+/* Selected text turns racing red instead of the browser's default blue */
+::selection {
+  background-color: #d50021;
+  color: #ffffff;
+}
+
+
+/* ===== 16. CHEQUERED FINISH LINE ===== */
+/* A black and white chequered strip at the very bottom of the last page (Next Chapter),
+   like the finish line of a race, to mark the end of the site */
+.last-page::after {
+  content: "";
+  display: block;
+  height: 16px;
+  background-color: #111111;
+  background-image:
+    linear-gradient(45deg, #f2f2f4 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, #f2f2f4 75%),
+    linear-gradient(45deg, #f2f2f4 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, #f2f2f4 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
 }
